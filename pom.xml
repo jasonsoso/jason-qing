@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jason</groupId>
-	<artifactId>admin</artifactId>
-	<name>admin</name>
+	<artifactId>qing</artifactId>
+	<name>qing</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -45,19 +45,7 @@
 		  <version>1.0.0</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>core</artifactId>
-			<version>1.7</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.zxing</groupId>
-			<artifactId>javase</artifactId>
-			<version>1.7</version>
-		</dependency>
-		
-
-		<!-- Servlet jsp jstl -->
+ 		<!-- Servlet jsp jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -136,7 +124,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<configuration>
-					<warName>admin</warName>
+					<warName>qing</warName>
 				</configuration>
 			</plugin>
 
@@ -216,7 +204,7 @@
                     </webApp>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">
-                            <port>8087</port>
+                            <port>8086</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>
