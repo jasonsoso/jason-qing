@@ -45,6 +45,9 @@ import com.jason.security.util.ShiroUserUtils;
 public class ArticleController extends ControllerSupport {
 	
 	private static final String REDIRECT_LIST = "redirect:/article/list";
+	private static final String FORM = "article/form";
+	private static final String LIST = "article/list";
+	
 	
 	@Autowired
 	private ArticleService articleService;
@@ -63,7 +66,7 @@ public class ArticleController extends ControllerSupport {
 		page = articleService.queryPage(page, query.hql(), query.values());
 		
 		model.addAttribute(page);
-		return "article/list";
+		return LIST;
 	}
 
 	/**
@@ -73,7 +76,7 @@ public class ArticleController extends ControllerSupport {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute(new Article());
-		return "article/form";
+		return FORM;
 	}
 
 	/**
@@ -86,7 +89,7 @@ public class ArticleController extends ControllerSupport {
 		if(ShiroUserUtils.isCurrentUser()){//判断用户是否已经登陆
 			if (result.hasErrors()) {
 				error(model, "创建文章失败，请核对数据!");
-				return "article/form";
+				return FORM;
 			}
 			Date now = new Date();
 			entity.setCreatedAt(now);
@@ -109,12 +112,12 @@ public class ArticleController extends ControllerSupport {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("_method", "put")
 				.addAttribute(articleService.get(id));
-		return "article/form";
+		return FORM;
 	}
 
 	/**
@@ -122,7 +125,7 @@ public class ArticleController extends ControllerSupport {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}/edit", method = RequestMethod.PUT)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String edit(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		try {
 			Article entity = articleService.get(id);
@@ -156,7 +159,7 @@ public class ArticleController extends ControllerSupport {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public String delete(@PathVariable("id") Long id,RedirectAttributes redirectAttributes) {
 		articleService.delete(id);
 		success(redirectAttributes,"删除文章成功！");

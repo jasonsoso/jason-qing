@@ -46,7 +46,7 @@
 	            </a>
 	          </li>
 	          <li id="editId" title="编辑"  class="icon new_collection_link active">
-	            <a class="pjax" href="${ctx }/article/edit">
+	            <a class="pjax" >
 	              <i class="icon-pencil"></i>
 	              <span>编辑</span>
 	            </a>
