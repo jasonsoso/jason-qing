@@ -21,6 +21,8 @@ import com.jason.framework.web.exception.ResourceNotFoundException;
 import com.jason.framework.web.support.ControllerSupport;
 import com.jason.qing.application.article.ArticleService;
 import com.jason.qing.domain.article.Article;
+import com.jason.security.model.UserInfo;
+import com.jason.security.util.ShiroUserUtils;
 
 /**
  * 
@@ -81,19 +83,24 @@ public class ArticleController extends ControllerSupport {
 	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@Valid Article entity, BindingResult result, HttpServletRequest request,Model model,RedirectAttributes redirectAttributes) {
-
-		if (result.hasErrors()) {
-			error(model, "创建文章失败，请核对数据!");
-			return "article/form";
+		if(ShiroUserUtils.isCurrentUser()){//判断用户是否已经登陆
+			if (result.hasErrors()) {
+				error(model, "创建文章失败，请核对数据!");
+				return "article/form";
+			}
+			Date now = new Date();
+			entity.setCreatedAt(now);
+			entity.setUpdatedAt(now);
+			
+			UserInfo userInfo = new UserInfo(ShiroUserUtils.getCurrentUserId());
+			entity.setUserInfo(userInfo);
+			
+			articleService.store(entity);
+			
+			success(redirectAttributes,"创建文章成功！"); 
+		}else {
+			error(redirectAttributes, "用户没登陆!");
 		}
-		Date now = new Date();
-		entity.setCreatedAt(now);
-		entity.setUpdatedAt(now);
-		//entity.setUser(SecurityHolder.getCurrentUser());
-		
-		articleService.store(entity);
-		
-		success(redirectAttributes,"创建文章成功！"); 
 		return REDIRECT_LIST;
 	}
 
@@ -168,13 +175,13 @@ public class ArticleController extends ControllerSupport {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String show(@PathVariable("id") Long id, Model model) {
 		Article article = articleService.get(id);
-		if(null!=article){
+		if (null != article) {
 			Article prev = articleService.getPrev(article);
 			Article next = articleService.getNext(article);
 			model.addAttribute(article)
-			 	.addAttribute("prev",prev)
-			 	.addAttribute("next",next);
-		}else{
+					.addAttribute("prev", prev)
+					.addAttribute("next", next);
+		} else {
 			throw new ResourceNotFoundException();
 		}
 		return "WEB-INF/front/template/show";

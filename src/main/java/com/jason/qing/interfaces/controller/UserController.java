@@ -49,7 +49,7 @@ public class UserController extends ControllerSupport {
 		UserInfo user = queryRepository.queryByName(username);
 		
 		if(null != user){
-			HQLQuery query = new HQLQuery().table("select a from Article a join a.user u")
+			HQLQuery query = new HQLQuery().table("select a from Article a join a.userInfo u")
 											.eq("u.username", username)
 											.orderBy("a.createdAt desc");
 			

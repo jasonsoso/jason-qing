@@ -2,7 +2,6 @@ package com.jason.qing.domain.article;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.jason.framework.domain.IdDomainObject;
@@ -38,7 +37,6 @@ public class Article extends IdDomainObject{
 	
 	private Date updatedAt;		//最后更新时间
 	
-	@NotNull
 	private UserInfo userInfo;
 
 	

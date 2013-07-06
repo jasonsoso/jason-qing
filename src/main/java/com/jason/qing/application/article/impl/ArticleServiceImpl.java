@@ -51,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public Article getPrev(Article article) {
-		String hql = "select a from Article a where id=(select max(id) from Article where id < ? and user.id=?)";
+		String hql = "select a from Article a where id=(select max(id) from Article where id < ? and userInfo.id=?)";
 		return (Article) articleRepository.queryUnique(hql, article.getId(),article.getUserInfo().getId());
 	}
 
@@ -60,7 +60,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public Article getNext(Article article) {
-		String hql = "select a from Article a where id=(select min(id) from Article where id > ? and user.id=?)";
+		String hql = "select a from Article a where id=(select min(id) from Article where id > ? and userInfo.id=?)";
 		return (Article) articleRepository.queryUnique(hql, article.getId(),article.getUserInfo().getId());
 	}
 

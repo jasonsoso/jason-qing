@@ -19,12 +19,12 @@
            <#list page.result as article>
    
 <div class="list-widget" style="padding: 12px;">
-    <a target="_blank" href="${ctx}/${article.user.username}" title="${article.user.username}">
+    <a target="_blank" href="${ctx}/${article.userInfo.username}" title="${article.userInfo.username}">
         <img src="${ctx}/resources/images/default.png" width="42" height="42" class="avatar" style="float:left">
     </a>
     <div class="list-head">
         <h3><a target="_blank" href="${ctx}/article/${article.id}">${article.title}</a></h3>
-        <div class="list-meta">by <a target="_blank" href="${ctx}/${article.user.username}">${article.user.username}</a></div>
+        <div class="list-meta">by <a target="_blank" href="${ctx}/${article.userInfo.username}">${article.userInfo.username}</a></div>
     </div>
     <div>
         ${article.summary}
@@ -44,8 +44,8 @@
         <!--right start-->
         <div class="span4">
 
-            <div class="thumbnail bg-white"><!--${ctx}${user.photo}-->
-                  <img class="img-polaroid" width="130" hight="130"  src="<@jason_user_icon path="${user.photo}" type="130_130"/>" alt="">
+            <div class="thumbnail bg-white">
+                  <img class="img-polaroid" width="130" hight="130"  src="<@jason_user_icon path="${user.photo!''}" type="130_130"/>" alt="">
                   
                   <div class="caption">
                     <h3><a href="${ctx}/${user.username}">${user.username}</a></h3>

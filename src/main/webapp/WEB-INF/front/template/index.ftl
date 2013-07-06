@@ -93,12 +93,12 @@
              
              <#list page.result as article>
 <div class="list-widget list-init" style="padding: 5px;">
-    <a target="_blank" href="${ctx}/${article.user.username}" title="${article.user.username}">
+    <a target="_blank" href="${ctx}/${article.userInfo.username}" title="${article.userInfo.username}">
         <img src="${ctx}/resources/images/me.png" width="42" height="42" class="avatar" style="float:left">
     </a>
     <div class="list-head">
         <h3><a target="_blank" href="${ctx}/article/${article.id}">${article.title}</a></h3>
-        <div class="list-meta">by <a target="_blank" href="${ctx}/${article.user.username}">${article.user.username}</a></div>
+        <div class="list-meta">by <a target="_blank" href="${ctx}/${article.userInfo.username}">${article.userInfo.username}</a></div>
     </div>
     <div>
         ${article.summary}
