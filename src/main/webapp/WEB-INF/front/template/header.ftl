@@ -35,16 +35,27 @@
                     <ul class="nav pull-right">
                       <!--<li><a href="#">Link</a></li>-->
                       <li class="divider-vertical"></li>
+                      
+                      <@shiro.authenticated>
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Jason <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><@shiro.principal></@shiro.principal><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">我的博客</a></li>
                           <li><a href="#">我的资料</a></li>
                           <li><a href="#">设置</a></li>
                           <li class="divider"></li>
-                          <li><a href="#">退出</a></li>
+                          <li><a href="${ctx}/logout?service=<@jason_properties key='sso.currurlpre' default=''/>/shiro-cas">退出</a></li>
                         </ul>
                       </li>
+                      </@shiro.authenticated>
+                      <@shiro.notAuthenticated>
+                        <li>
+                            <a rel="nofollow" href="<@jason_properties key='sso.loginurlpre' default=''/>/login?service=<@jason_properties key='sso.currurlpre' default=''/>/shiro-cas">
+                              <span class="label label-important">请登陆!</span></a>
+                        </li>
+                        
+                      </@shiro.notAuthenticated>
+                      
                     </ul>
                   </div><!-- /.nav-collapse -->
                 </div>

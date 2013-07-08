@@ -46,8 +46,8 @@
             </beans:list>
         </beans:property>
     </beans:bean>
-    <!-- freemarkerConfig配置-->
-    <beans:bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <!-- freemarkerConfig配置  org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer -->
+    <beans:bean id="freemarkerConfig" class="com.jason.security.web.directive.freemarker.FreeMarkerShiroDirectiveConfigurer">
         <beans:property name="defaultEncoding" value="utf-8"></beans:property>
         <beans:property name="templateLoaderPath" value="/"></beans:property>
         <beans:property name="freemarkerSettings">
