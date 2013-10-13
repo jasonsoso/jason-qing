@@ -11,7 +11,7 @@
 	</appender>
 	
 	<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">    
-        <param name="File" value="../logs/jason-admin.log" />      
+        <param name="File" value="../logs/jason-qing.log" />      
         <param name="Append" value="true" />
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />      
         <layout class="org.apache.log4j.PatternLayout">    
@@ -29,6 +29,9 @@
     </logger>
 	
 	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.data">
+        <level value="debug" />
+    </logger>
 	<logger name="org.springframework.core">
 		<level value="warn" />
 	</logger>
