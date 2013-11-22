@@ -1,10 +1,11 @@
-package com.jason.qing.domain.article;
+package com.jason.qing.infrastruture.persist.hibernate;
 
 
 import java.util.List;
 import java.util.Map;
 
 import com.jason.framework.orm.Page;
+import com.jason.qing.domain.article.Article;
 
 /**
  * 

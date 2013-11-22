@@ -69,7 +69,7 @@
 	
 	<bean id="realm" class="com.jason.security.realm.MyCasRealm" >
 	   <property name="queryRepository" ref="queryRepository"/> 
-	   <property name="cacheManager" ref="shiroCacheManager"/> 
+	   <property name="cacheManager" ref="cacheManager"/> 
 	   <property name="casServerUrlPrefix" value="${sso.loginurlpre}"/>  
        <property name="casService" value="${sso.currurlpre}/shiro-cas"/>  
 	</bean>
@@ -79,8 +79,8 @@
     	<property name="realm" ref="realm"/>
 	</bean>
 	<!-- 用户授权信息Cache, 采用EhCache -->
-	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-<!-- 	   <property name="cacheManagerConfigFile" value="classpath:/META-INF/ehcache/ehcache-hibernate.xml"/> -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+	   <property name="cacheManagerConfigFile" value="classpath:/META-INF/ehcache/ehcache-shiro.xml"/>
 	</bean> 
  
 	

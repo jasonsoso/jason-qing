@@ -30,7 +30,8 @@
                       </li>-->
                     </ul>
                     <form class="navbar-search pull-left" action="">
-                      <input type="text" class="search-query span2" placeholder="Search">
+                      <input type="text" class="search-query span2" placeholder="搜索标签">
+                      <button type="submit" class="btn">搜索</button>
                     </form>
                     <ul class="nav pull-right">
                       <!--<li><a href="#">Link</a></li>-->

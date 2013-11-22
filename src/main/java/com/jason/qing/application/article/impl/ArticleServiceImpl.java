@@ -11,7 +11,7 @@ import com.jason.framework.orm.Page;
 import com.jason.framework.util.html.SubStringHTML;
 import com.jason.qing.application.article.ArticleService;
 import com.jason.qing.domain.article.Article;
-import com.jason.qing.domain.article.ArticleRepository;
+import com.jason.qing.infrastruture.persist.hibernate.ArticleRepository;
 
 @Service
 @Transactional

@@ -1,0 +1,21 @@
+@charset "utf-8";
+/*Reset */
+body, h1, h2, h3, h4, h5, h6, hr, p,blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, img {border:medium none;margin: 0;padding: 0;}
+body,button, input, select, textarea { font: 12px/1.5 "microsoft yahei",Arial, Helvetica, sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-size:100%; font-weight:normal; }
+em{font-style:normal;}
+ul, ol {list-style: none; }
+img{ border:0px;}
+.clear{width:0px; height:0px; margin:0px; padding:0px; line-height:0px; font-size:0px; clear:both;}
+a {text-decoration: none;}
+/*Reset */
+/*标签*/
+.side { padding:0 0 20px 0; margin:200px auto 20px; width:178px;}
+.tips_content { border:1px solid #bbb; padding:10px; width:178px; background:#fff; overflow-x:hidden; _height:98px; min-height:98px;}
+.tips_content input { height: 22px; width: 178px; border:none; line-height:22px; color:#999; }
+.tips_content li { line-height: 22px; color: #667C6E; background: #C7DA76; padding: 0px 5px; float: left; height: 22px; border: 1px solid #B7C963; margin:0 10px 10px 0; border-radius:3px; cursor:default; display:inline; white-space: nowrap;}
+.tips_content li a { font: 14px "Lucida Sans Unicode", "Lucida Grande", sans-serif; padding: 0px 0px 0px 5px; color:#7b8994; line-height:22px; cursor:pointer; }
+.tips_content li a:hover {color:#B3BBC3;}
+.tips_content textarea { border:none; width:178px; line-height:22px; color:#999; height:98px; resize:none; overflow:auto;}
+/*标签*/
+

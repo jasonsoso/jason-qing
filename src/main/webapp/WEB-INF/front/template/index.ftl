@@ -11,11 +11,11 @@
     <#include "header.ftl" /><!--head-->
     
     <div class="container">
-      <!--
-      <div class="row-fluid">-->
+      
+      <div class="row-fluid">
         
         <!--left start-->
-        <!--
+        
         <div class="span8">
         
             <div class="bs-docs-example">
@@ -49,11 +49,11 @@
             </div>
               
               
-        </div>-->
+        </div>
         <!--left end-->
         
         <!--right start-->
-        <!---
+        
         <div class="span4">
 
             <div id="myTabContent" class="tab-content">
@@ -83,11 +83,11 @@
             </div>
 
 
-        </div>-->
+        </div>
         <!--right end-->
         
-       <!--
-      </div>-->
+       
+      </div>
         <div id="content" class="row-fluid">
              
              
