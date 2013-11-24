@@ -21,7 +21,7 @@
 			</#list>
 			</#if>
 		<#else>
-			  ...&nbsp;  
+              <li><span>...&nbsp;</span></li>
 			  <#list page.pageNo?number-4..page.pageNo?number as i>
 				<#if page.pageNo?number==i>
 					<li class="active"><a>${i}</a></li>
@@ -47,7 +47,7 @@
 					<li><a href="${pagingUrl }/page/${i}">${i}</a></li>
 				</#if>
 			</#list>
-			  ...&nbsp;  
+			  <li><span>...&nbsp;</span></li>
 			  <li><a href="${pagingUrl }/page/${totalPages}">${totalPages}</a></li>
 		</#if>
 		<#if page.pageNo?number lt totalPages?number>

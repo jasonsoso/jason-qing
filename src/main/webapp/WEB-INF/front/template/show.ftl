@@ -82,34 +82,10 @@
 
 $(function(){
     
-    //init_masonry();
-    
-    function init_masonry(){
-        var $container = $('#content');
-        var gutter = 15;
-        var min_width = 350;
-        $container.imagesLoaded( function(){
-            $container.masonry({
-                itemSelector : '.list-widget',
-                gutterWidth: gutter,
-                isAnimated: true,
-                  columnWidth: function( containerWidth ) {
-                    var num_of_boxes = (containerWidth/min_width | 0);
-                    var box_width = (((containerWidth - (num_of_boxes-1)*gutter)/num_of_boxes) | 0) ;
-                    if (containerWidth < min_width) {
-                        box_width = containerWidth;
-                    }
-                    $('.list-widget').width(box_width);
-                    return box_width;
-                  }
-            });
-        });
-    }
-
-    
     //代码高亮
     SyntaxHighlighter.highlight();
     //调整左右对齐
+    
     for(var i=0,di;di=SyntaxHighlighter.highlightContainers[i++];){
             var tds = di.getElementsByTagName('td');
             for(var j=0,li,ri;li=tds[0].childNodes[j];j++){

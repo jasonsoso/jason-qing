@@ -1,22 +1,53 @@
 <#include "common-taglibs.ftl" />
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>杰森博客</title>
     <#include "common-header.ftl" />
- </head>
-  <body>
+    <style>
+body {
+    margin: 0;
+    padding: 50px 0;
+}
+
+.lead { padding: 40px 0; }
+
+#posts { margin: 30px auto 0; }
+.post {
+    margin: 0 0 50px;
+}
+
+@media (min-width: 940px) {
+    .container > #posts .post { width: 268px; }
+}
+ 
+
+@media (min-width: 768px) and (max-width: 979px) {
+    .container-fluid > #posts .post { width: 280px; }
+    .container-fluid > #posts .post.cs2 { width: 610px; }
+    .container > #posts .post { width: 337px; }
+    .container > #posts .post.cs2 { width: 100%; }
+}
+ 
+
+@media (max-width: 767px) {
+    body { padding: 50px 20px; }
+    .post, .post.cs2 { width: 100%; }
+}
+    </style>
     
+
+</head>
+<body>
     <#include "header.ftl" /><!--head-->
+    <!-- Posts -->
     
     <div class="container">
-      
-      <div class="row-fluid">
+        <div class="row-fluid">
+        <!--span12 start-->
         
-        <!--left start-->
-        
-        <div class="span8">
+        <div class="span12">
         
             <div class="bs-docs-example">
               <div id="myCarousel" class="carousel slide">
@@ -48,53 +79,20 @@
               </div>
             </div>
               
-              
         </div>
-        <!--left end-->
         
-        <!--right start-->
-        
-        <div class="span4">
-
-            <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade in active" id="home">
-              
-                    <ol>
-                      <li>記錄Oracle常用SQL </li>
-                      <li>MongoDB学习(五、所谓的高级更新) </li>
-                      <li>作出艰难的决定 </li>
-                      <li>《我为何而生》 </li>
-                      <li>Nulla volutpat aliquam velit</li>
-                      <li>Faucibus porta lacus fringilla vel</li>
-                      <li>Aenean sit amet erat nunc</li>
-                      <li>Eget porttitor lorem</li>
-                    </ol>
-                    
-              </div>
-              <div class="tab-pane fade" id="profile">
-                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. </p>
-              </div>
-              <div class="tab-pane fade" id="dropdown1">
-                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-              </div>
-              <div class="tab-pane fade" id="dropdown2">
-                <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
-              </div>
-            </div>
-
-
-        </div>
-        <!--right end-->
-        
-       
       </div>
-        <div id="content" class="row-fluid">
-             
-             
-             <#list page.result as article>
-<div class="list-widget list-init" style="padding: 5px;">
+      <!--span12 end-->
+    </div>
+    </div>
+    <div class="container">
+    
+        <div id="posts">
+            
+            <#list page.result as article>
+<div class="post list-widget" style="padding: 5px;">
     <a target="_blank" href="${ctx}/${article.userInfo.username}" title="${article.userInfo.username}">
-        <img src="${ctx}/resources/images/me.png" width="42" height="42" class="avatar" style="float:left">
+        <img src="${ctx}/resources/images/default.png" width="42" height="42" class="avatar" style="float:left">
     </a>
     <div class="list-head">
         <h3><a target="_blank" href="${ctx}/article/${article.id}">${article.title}</a></h3>
@@ -106,63 +104,54 @@
 </div>
             </#list>
             
-           
-
-
         </div>
-        
-        <div class="pagination pagination-centered">
-             <#assign pagingUrl="${ctx}/article">
-             <#include  "page.ftl">
-        </div>
-           
-           
-    <hr/>
-<#include "footer.ftl" /><!--foot-->
     </div>
-
-<#include "common-footer.ftl" />
-<script src="${ctx }/resources/js/jquery.masonry.min.js"></script>
-<script type="text/javascript">
-
-$(function(){
     
-    init_masonry();
+    <div class="pagination pagination-centered">
+         <#assign pagingUrl="${ctx}/article">
+         <#include  "page.ftl">
+    </div>
     
-    function init_masonry(){
-        var $container = $('#content');
-        var gutter = 15;
-        var min_width = 350;
-        $container.imagesLoaded( function(){
-            $container.masonry({
-                itemSelector : '.list-widget',
-                gutterWidth: gutter,
-                isAnimated: true,
-                  columnWidth: function( containerWidth ) {
-                    var num_of_boxes = (containerWidth/min_width | 0);
-                    var box_width = (((containerWidth - (num_of_boxes-1)*gutter)/num_of_boxes) | 0) ;
-                    if (containerWidth < min_width) {
-                        box_width = containerWidth;
-                    }
-                    $('.list-widget').width(box_width);
-                    return box_width;
-                  }
-            });
-        });
-    }
+    <#include "footer.ftl" /><!--foot-->
+    
+    <#include "common-footer.ftl" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.0.0/masonry.pkgd.js"></script>
+    <script>
+// Load is used to ensure all images have been loaded, impossible with document
+jQuery( window ).load( function() {
+    // Takes the gutter width from the bottom margin of .post
+    var gutter = parseInt( jQuery( '.post' ).css( 'marginBottom' ) );
+    var container = jQuery( '#posts' );
+    // Creates an instance of Masonry on #posts
 
-    
-    //代码高亮
-    SyntaxHighlighter.highlight();
-    //调整左右对齐
-    for(var i=0,di;di=SyntaxHighlighter.highlightContainers[i++];){
-            var tds = di.getElementsByTagName('td');
-            for(var j=0,li,ri;li=tds[0].childNodes[j];j++){
-                ri = tds[1].firstChild.childNodes[j];
-               ri.style.height = li.style.height = ri.offsetHeight + 'px';
-           }
-     }
+    container.masonry({
+        gutter: gutter,
+        itemSelector: '.post',
+        columnWidth: '.post'
+    });
+    // This code fires every time a user resizes the screen and only affects .post elements
+    // whose parent class is .container-fluid. Triggers resize so nothing looks weird.
+    jQuery( window ).bind( 'resize', function(){
+        if ( jQuery( '#posts' ).parent().hasClass( 'container-fluid' ) ) {
+            // Resets all widths to 'auto' to sterilize calculations
+            post_width = jQuery( '.post' ).width() + gutter;
+            jQuery( '.container-fluid #posts, body > .container-fluid' ).css( 'width', 'auto');
+            // Calculates how many .post elements will actually fit per row. Could this code be cleaner?
+
+            posts_per_row = jQuery( '#posts' ).innerWidth() / post_width;
+            floor_posts_width = ( Math.floor( posts_per_row ) * post_width ) - gutter;
+            ceil_posts_width = ( Math.ceil( posts_per_row ) * post_width ) - gutter;
+            posts_width = ( ceil_posts_width > jQuery( '#posts' ).innerWidth() ) ? floor_posts_width : ceil_posts_width;
+            if ( posts_width == jQuery( '.post' ).width() ) posts_width = '100%';
+            
+            // Ensures that all top-level .container-fluid elements have equal width and stay centered
+            
+            jQuery( '.container-fluid #posts, body > .container-fluid' ).css( 'width', posts_width );
+            jQuery( 'body > .container-fluid' ).css({ 'margin': '0 auto' });
+        }
+    }).trigger( 'resize' );
 });
-</script>
-  </body>
+    </script>
+    
+</body>
 </html>
