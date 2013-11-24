@@ -13,7 +13,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(){
-		return "login";
+		
+		return "redirect:/article/";
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
