@@ -9,11 +9,11 @@ var video = {};
 
 (function(){
     video.init = function(){
-        switchTab("videoTab");
+       // switchTab("videoTab");
         createAlignButton( ["videoFloat"] );
         addUrlChangeListener($G("videoUrl"));
         addOkListener();
-        addSearchListener();
+
 
         //编辑视频时初始化相关信息
         (function(){
@@ -22,7 +22,9 @@ var video = {};
                 $G("videoUrl").value = url = img.getAttribute("_url");
                 $G("videoWidth").value = img.width;
                 $G("videoHeight").value = img.height;
-                updateAlignButton(img.getAttribute("align"));
+                var align = domUtils.getComputedStyle(img,"float"),
+                    parentAlign = domUtils.getComputedStyle(img.parentNode,"text-align");
+                updateAlignButton(parentAlign==="center"?"center":align);
             }
             createPreviewVideo(url);
         })();
@@ -38,9 +40,9 @@ var video = {};
                 case "video":
                     return insertSingle();
                     break;
-                case "videoSearch":
-                    return insertSearch("searchList");
-                    break;
+//                case "videoSearch":
+//                    return insertSearch("searchList");
+//                    break;
             }
         };
         dialog.oncancel = function(){
@@ -264,14 +266,19 @@ var video = {};
 
         if ( !url )return;
 		var matches = url.match(/youtu.be\/(\w+)$/) || url.match(/youtube\.com\/watch\?v=(\w+)/) || url.match(/youtube.com\/v\/(\w+)/),
-            youku = url.match(/youku\.com\/v_show\/id_(\w+)/);
-		if (matches){
-			url = "https://www.youtube.com/v/" + matches[1] + "?version=3&feature=player_embedded";
-		}else if(youku){
-            url = "http://player.youku.com/player.php/sid/"+youku[1]+"/v.swf"
-        }else if(!endWith(url,[".swf",".flv",".wmv"])){
-            $G("preview").innerHTML = lang.urlError;
-            return;
+            youku = url.match(/youku\.com\/v_show\/id_(\w+)/),
+            youkuPlay = /player\.youku\.com/ig.test(url);
+        if(!youkuPlay){
+            if (matches){
+                url = "https://www.youtube.com/v/" + matches[1] + "?version=3&feature=player_embedded";
+            }else if(youku){
+                url = "http://player.youku.com/player.php/sid/"+youku[1]+"/v.swf"
+            }else if(!endWith(url,[".swf",".flv",".wmv"])){
+                $G("preview").innerHTML = lang.urlError;
+                return;
+            }
+        }else{
+            url = url.replace(/\?f=.*/,"");
         }
         $G("preview").innerHTML = '<embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
         ' src="' + url + '"' +
@@ -358,36 +365,6 @@ var video = {};
             o.setAttribute( "selected", "true" );
             o.style.cssText = "filter:alpha(Opacity=50);-moz-opacity:0.5;opacity: 0.5;border:2px solid blue;";
         }
-    }
-
-    /**
-     * 视频搜索相关注册事件
-     */
-    function addSearchListener(){
-        domUtils.on($G("videoSearchBtn"),"click",getMovie);
-        domUtils.on($G( "videoSearchTxt" ),"click",function () {
-            if ( this.value == lang.static.videoSearchTxt.value ) {
-                this.value = "";
-            }
-            this.setAttribute("hasClick","true");
-            selectTxt(this);
-        });
-        $G( "videoSearchTxt" ).onkeyup = function(){
-            this.setAttribute("hasClick","true");
-            this.onkeyup = null;
-        };
-        domUtils.on($G( "videoSearchReset" ),"click",function () {
-            var txt = $G( "videoSearchTxt" );
-            txt.value = "";
-            selectTxt(txt);
-            $G( "searchList" ).innerHTML = "";
-        });
-        domUtils.on($G( "videoType" ),"change", getMovie);
-        domUtils.on($G( "videoSearchTxt" ), "keyup", function ( evt ) {
-            if ( evt.keyCode == 13 ) {
-                getMovie();
-            }
-        } )
     }
 
 

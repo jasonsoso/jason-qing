@@ -16,9 +16,8 @@ import sun.misc.BASE64Decoder;
 import javax.servlet.http.HttpServletRequest;
 /**
  * UEditor文件上传辅助类
- * @author baidu
+ *
  */
-@SuppressWarnings("restriction")
 public class Uploader {
 	// 输出文件地址
 	private String url = "";
@@ -43,13 +42,12 @@ public class Uploader {
 	// 文件大小限制，单位KB
 	private int maxSize = 10000;
 	
-	private Map<String, String> errorInfo = new HashMap<String, String>();
+	private HashMap<String, String> errorInfo = new HashMap<String, String>();
 
 	public Uploader(HttpServletRequest request) {
 		this.request = request;
-		Map<String, String> tmp = this.errorInfo;
-		//默认成功
-		tmp.put("SUCCESS", "SUCCESS"); 
+		HashMap<String, String> tmp = this.errorInfo;
+		tmp.put("SUCCESS", "SUCCESS"); //默认成功
 		tmp.put("NOFILE", "未包含文件上传域");
 		tmp.put("TYPE", "不允许的文件格式");
 		tmp.put("SIZE", "文件大小超出限制");
@@ -172,7 +170,7 @@ public class Uploader {
 	 * @return string
 	 */
 	private String getFileExt(String fileName) {
-		return fileName.substring(fileName.lastIndexOf('.'));
+		return fileName.substring(fileName.lastIndexOf("."));
 	}
 
 	/**
@@ -212,10 +210,10 @@ public class Uploader {
 	 * @return
 	 */
 	private String getPhysicalPath(String path) {
-		String servletPath = "resources";
+		String servletPath = this.request.getServletPath();
 		String realPath = this.request.getSession().getServletContext()
 				.getRealPath(servletPath);
-		return new File(realPath)+"/" +path;
+		return new File(realPath).getParent() +"/" +path;
 	}
 
 	public void setSavePath(String savePath) {
