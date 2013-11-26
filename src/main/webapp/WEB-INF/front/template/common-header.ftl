@@ -6,6 +6,10 @@
 <link href="${ctx }/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="${ctx }/resources/js/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" rel="stylesheet"/>
 <link href="${ctx }/resources/css/front.css" rel="stylesheet">
+<script src="${ctx }/resources/bootstrap/js/jquery.js"></script>
+<script src="${ctx }/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx }/resources/js/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+
 
 <!--[if lt IE 9]>
    <script src="${ctx }/resources/js/html5.js"></script>

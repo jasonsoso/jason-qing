@@ -20,7 +20,7 @@
    
 <div class="list-widget" style="padding: 12px;">
     <a target="_blank" href="${ctx}/${article.userInfo.username}" title="${article.userInfo.username}">
-        <img src="${ctx}/resources/images/default.png" width="42" height="42" class="avatar" style="float:left">
+        <img src="${ctx}/resources/images/default.png"  class="avatar" style="float:left">
     </a>
     <div class="list-head">
         <h3><a target="_blank" href="${ctx}/article/${article.id}">${article.title}</a></h3>
