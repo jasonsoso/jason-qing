@@ -1,6 +1,6 @@
     <%@ page language="java" contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
-    <%@ page import="ueditor.Uploader" %>
+    <%@ page import="com.jason.qing.infrastruture.util.Uploader" %>
 
     <%
     request.setCharacterEncoding("utf-8");

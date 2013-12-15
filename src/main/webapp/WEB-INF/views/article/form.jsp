@@ -85,15 +85,18 @@
 	<%@include file="/WEB-INF/views/admin/footer.jsp" %>
     </div>
 <%@include file="/common/common-footer.jsp" %>
-<script src="${ctx }/resources/js/ueditor/editor_config.js"></script><!-- 配置文件 -->
-<script src="${ctx }/resources/js/ueditor/editor_all_min.js"></script><!-- 核心包 發佈版本 修改為 editor_all_min.js -->
+<script src="${ctx }/resources/js/ueditor/ueditor.config.js"></script><!-- 配置文件 -->
+<script src="${ctx }/resources/js/ueditor/ueditor.all.min.js"></script><!-- 核心包 發佈版本 修改為 ueditor_all_min.js -->
 <script type="text/javascript">
 	$(function(){
 		load();
-		 
-		var editor = new UE.ui.Editor();      
-		editor.render("content");
-		//1.2.4以后可以使用一下代码实例化编辑器     //UE.getEditor('content');
+		//window.UEDITOR_HOME_URL = "${ctx }/resources/js/ueditor/";
+		//var editor = new UE.ui.Editor({
+		//	imagePath:"http://photo.jasonsoso.com/"
+		//});      
+		//editor.render("content");
+		//1.2.4以后可以使用一下代码实例化编辑器     
+		UE.getEditor('content');
 
 		function load(){
 			$('#article_list').addClass('active');

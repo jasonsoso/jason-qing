@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 
+import com.jason.framework.util.PropertiesUtils;
+
 
 import sun.misc.BASE64Decoder;
 import javax.servlet.http.HttpServletRequest;
@@ -210,10 +212,12 @@ public class Uploader {
 	 * @return
 	 */
 	private String getPhysicalPath(String path) {
-		String servletPath = this.request.getServletPath();
-		String realPath = this.request.getSession().getServletContext()
-				.getRealPath(servletPath);
-		return new File(realPath).getParent() +"/" +path;
+		String photoServerDomain = PropertiesUtils.getEntryValue("photoPath.domain");
+		return photoServerDomain+path;
+		//String servletPath = this.request.getServletPath();
+		//String realPath = this.request.getSession().getServletContext()
+		//		.getRealPath(servletPath);
+		//return new File(realPath).getParent() +"/" +path;
 	}
 
 	public void setSavePath(String savePath) {
