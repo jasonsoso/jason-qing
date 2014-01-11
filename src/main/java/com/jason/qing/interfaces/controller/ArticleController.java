@@ -60,9 +60,16 @@ public class ArticleController extends ControllerSupport {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Page<Article> page, HttpServletRequest request, Model model) {
-
-		HQLQuery query = new HQLQuery().table("Article")
-									.orderBy("updatedAt desc");
+		HQLQuery query = null;
+		if(ShiroUserUtils.isCurrentUser()){
+			query = new HQLQuery().table("Article")//userInfo.id=
+				.eq("userInfo.id",ShiroUserUtils.getCurrentUserId())
+				.orderBy("updatedAt desc");
+		}else{
+			query = new HQLQuery().table("Article")
+				.orderBy("updatedAt desc");
+		}
+		
 		page = articleService.queryPage(page, query.hql(), query.values());
 		
 		model.addAttribute(page);

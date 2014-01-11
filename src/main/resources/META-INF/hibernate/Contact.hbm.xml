@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field">
+  <class name="com.jason.qing.domain.contact.Contact" table="qing_contact" lazy="false">
+	<cache usage="read-write" region="org.hibernate.cache.StandardQueryCache"/>
+    <id name="id" column="id">
+        <generator class="native"/>
+    </id>
+    
+    <property name="name" type="java.lang.String">
+        <column name="name" not-null="true" ></column>
+    </property>
+    <property name="mobile"  type="java.lang.String">
+        <column name="mobile" not-null="true"></column>
+    </property>
+    
+    <property name="createdAt"  type="java.util.Date">
+        <column name="createdAt" not-null="true"></column>
+    </property>
+    <property name="updatedAt" type="java.util.Date">
+        <column name="updatedAt" not-null="true" ></column>
+    </property>
+    
+  </class>
+</hibernate-mapping>

@@ -41,6 +41,11 @@
 	            /article/create** = authc
 	            /article/edit/** = authc
                 /article/delete/** = authc
+                
+                /contact/list** = authc
+                /contact/create** = authc
+                /contact/edit/** = authc
+                /contact/delete/** = authc
                  
 	             #/security/** = authc,roles[admin]
 	             #/security/authority/list** = authc,perms[authority:list]
