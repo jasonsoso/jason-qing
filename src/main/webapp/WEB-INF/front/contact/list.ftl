@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!--<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">-->
 
-    <title>Sticky Footer Navbar Template for Bootstrap</title>
+    <title>小担小学六（2）班</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${ctx }/resources/bootstrap-3.0.3/css/bootstrap.css" rel="stylesheet">
