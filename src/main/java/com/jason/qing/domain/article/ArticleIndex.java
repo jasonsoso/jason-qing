@@ -1,20 +1,17 @@
 package com.jason.qing.domain.article;
 
-import static org.springframework.data.elasticsearch.annotations.FieldIndex.analyzed;
-import static org.springframework.data.elasticsearch.annotations.FieldType.String;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-
-@Document(indexName = "articles", type = "article", shards = 1, replicas = 0, refreshInterval = "-1", indexStoreType = "memory")
+//@Document(indexName = "articles", type = "article", shards = 1, replicas = 0, refreshInterval = "-1", indexStoreType = "memory")
 public class ArticleIndex {
 
-    @Id
+    //@Id
     private String id;
     
-    @Field(type = String, index = analyzed, store = true, searchAnalyzer = "ik", indexAnalyzer = "ik")
+    //@Field(type = String, index = analyzed, store = true, searchAnalyzer = "ik", indexAnalyzer = "ik")
     private String title;
+    
+    //@Field(type = String, index = analyzed, store = true, searchAnalyzer = "ik", indexAnalyzer = "ik")
+    private String summary;
     
     public ArticleIndex() {
     }
@@ -34,4 +31,13 @@ public class ArticleIndex {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	
 }
