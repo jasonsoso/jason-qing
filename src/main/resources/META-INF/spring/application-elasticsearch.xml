@@ -14,24 +14,13 @@
      http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-lazy-init="true">	
 
     
-    <bean id="transportClient" 
-		class="com.jason.qing.infrastruture.persist.elasticsearch.ElasticsearchTransportClient" >
-	</bean>
-	
-	
-	<!--
-	<property name="transportAddresses">
-			<map>
-				<entry key="localhost" value="9300" />
-			</map>
-		</property>
-		
-		
-	 <bean id="articleIndexRepository" 
-		class="com.jason.qing.infrastruture.persist.elasticsearch.impl.ElasticsearchArticleIndexRepository" >
-		<property name="transportClient" ref="transportClient" />
-	</bean> -->
-	
-	
-	
+	<bean id="esTransportClientManager"  class="com.jason.qing.infrastruture.persist.elasticsearch.EsTransportClientManagerFactoryBean" >
+        <property name="transportAddresses">
+            <map>
+                <entry key="localhost" value="9300" />
+            </map>
+        </property>
+    </bean>
+
+
 </beans>

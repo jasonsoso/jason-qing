@@ -27,7 +27,7 @@ public class ElasticsearchArticleIndexRepository implements
 		//}else{
 		//	System.out.println("---------transportClient is not null------------");
 		//}
-		System.out.println("---------index------------");
+		System.out.println("---------ElasticsearchArticleIndexRepository index------------");
 		/*try {
 			transportClient
 					.prepareIndex("articles", "article")
