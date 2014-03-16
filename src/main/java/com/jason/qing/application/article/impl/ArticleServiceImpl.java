@@ -34,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void store(Article entity) {
 		entity.setSummary(SubStringHTML.subStringHTML(entity.getContent(), 300));
 		articleRepository.store(entity);
+		articleIndexRepository.index(entity);
 	}
 
 	@Override
@@ -51,18 +52,12 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleRepository.queryPage(page, hql, values);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.jason.blog.application.article.ArticleService#getPre(com.jason.blog.domain.article.Article)
-	 */
 	@Override
 	public Article getPrev(Article article) {
 		String hql = "select a from Article a where id=(select max(id) from Article where id < ? and userInfo.id=?)";
 		return (Article) articleRepository.queryUnique(hql, article.getId(),article.getUserInfo().getId());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.jason.blog.application.article.ArticleService#getNext(com.jason.blog.domain.article.Article)
-	 */
 	@Override
 	public Article getNext(Article article) {
 		String hql = "select a from Article a where id=(select min(id) from Article where id > ? and userInfo.id=?)";

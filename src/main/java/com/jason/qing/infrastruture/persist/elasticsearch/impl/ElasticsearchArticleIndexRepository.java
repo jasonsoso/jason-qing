@@ -29,6 +29,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import com.jason.framework.orm.Page;
+import com.jason.framework.util.html.HtmlHelper;
 import com.jason.qing.domain.article.Article;
 import com.jason.qing.infrastruture.persist.elasticsearch.ArticleIndexRepository;
 import com.jason.qing.infrastruture.persist.elasticsearch.ElasticsearchHelper;
@@ -102,7 +103,7 @@ public class ElasticsearchArticleIndexRepository implements
 		try {
 			XContentBuilder builder = XContentFactory.jsonBuilder().startObject()
 										.field(TITLE, entity.getTitle())
-										.field(SUMMARY, entity.getSummary())
+										.field(SUMMARY, HtmlHelper.filterHtml(entity.getSummary()))
 										.endObject();
 			transportClient.prepareIndex(INDICE, TYPE,String.valueOf(entity.getId()))
 							.setSource(builder).execute().actionGet();
@@ -124,7 +125,7 @@ public class ElasticsearchArticleIndexRepository implements
 				for (Article article:list) {
 					XContentBuilder builder = XContentFactory.jsonBuilder().startObject()
 							.field(TITLE, article.getTitle())
-							.field(SUMMARY, article.getSummary())
+							.field(SUMMARY, HtmlHelper.filterHtml(article.getSummary()))
 							.endObject();
 					bulkRequest.add(transportClient.prepareIndex(INDICE, TYPE,String.valueOf(article.getId())).setSource(builder));
 				}
