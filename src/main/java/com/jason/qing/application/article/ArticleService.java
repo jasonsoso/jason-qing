@@ -59,4 +59,11 @@ public interface ArticleService {
 	 */
 	void indexAll();
 	
+	/**搜索关键字
+	 * @param page 分页
+	 * @param q 关键字
+	 * @return
+	 */
+	Page<Article> search(Page<Article> page,String q);
+	
 }

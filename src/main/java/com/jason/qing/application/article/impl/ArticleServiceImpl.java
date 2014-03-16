@@ -76,4 +76,9 @@ public class ArticleServiceImpl implements ArticleService {
 		articleIndexRepository.index(list);
 	}
 
+	@Override
+	public Page<Article> search(Page<Article> page, String q) {
+		return articleIndexRepository.queryPage(page, q);
+	}
+
 }
