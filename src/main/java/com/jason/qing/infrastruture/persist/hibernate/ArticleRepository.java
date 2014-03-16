@@ -20,7 +20,7 @@ public interface ArticleRepository {
 
 	void delete(Long id);
 
-	List<Article> query(String queryString, Object... values);
+	List<Article> query(String hql, Map<String, Object> values);
 
 	Page<Article> queryPage(Page<Article> page, String hql, Map<String, Object> values);
 	

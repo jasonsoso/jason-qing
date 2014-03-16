@@ -50,6 +50,12 @@
 	              <span>删除</span>
 	            </a>
 	          </li>
+	          <li id="indexId" title="重建索引"  class="icon new_collection_link ">
+	            <a class="pjax" href="javascript:;">
+	              <i class="icon-plus"></i>
+	              <span>重建索引</span>
+	            </a>
+	          </li>
 			</ul>
 
 			<form id="myForm" action="${ctx }/article/list" method="get">
@@ -149,6 +155,15 @@
 				};
 			}else{
 				alert("请先选择要删除的内容");
+			};
+		});
+		$("#indexId").click(function(){
+			if(confirm("确定要重新索引数据吗？")){
+				$("#myForm").attr("action", "${ctx}/article/indexAll")
+							.attr("method","post")
+							.append('<input type="hidden" name="_method" value="POST" />')
+							.submit();
+				return;
 			};
 		});
 		

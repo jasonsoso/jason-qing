@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.ElasticSearchException;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -21,6 +23,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -28,29 +31,83 @@ import org.springframework.util.Assert;
 import com.jason.framework.orm.Page;
 import com.jason.qing.domain.article.Article;
 import com.jason.qing.infrastruture.persist.elasticsearch.ArticleIndexRepository;
+import com.jason.qing.infrastruture.persist.elasticsearch.ElasticsearchHelper;
 
 @Repository
 public class ElasticsearchArticleIndexRepository implements
-		ArticleIndexRepository {
+		ArticleIndexRepository,InitializingBean {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private final static String INDICE = "articles";
 	private final static String TYPE = "article";
 	
+	//定义字段常量
+	private final static String TITLE = "title";
+	private final static String SUMMARY = "summary";
+	
 	@Autowired
 	private TransportClient transportClient;
+
+	
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		initArticleIndexMapping();
+	}
+
+	
+	private void initArticleIndexMapping() {
+		try {
+			boolean isExists = ElasticsearchHelper.isExistsIndex(transportClient, INDICE);
+			if(!isExists){
+				//create index
+				transportClient.admin().indices().prepareCreate(INDICE).execute().actionGet();
+			    //crate mapping
+				XContentBuilder mapping = XContentFactory.jsonBuilder().startObject()
+				        .startObject(TYPE)
+				        	.startObject("_all")      
+					        	.field("indexAnalyzer", "ik")
+					            .field("searchAnalyzer", "ik")
+					        .endObject()
+					        .startObject("properties")      
+				              	.startObject(TITLE)
+				              	  .field("type", "string")      
+					              .field("indexAnalyzer", "ik")
+					              .field("searchAnalyzer", "ik")
+					            .endObject()  
+					            .startObject(SUMMARY)
+				              	  .field("type", "string")      
+					              .field("indexAnalyzer", "ik")
+					              .field("searchAnalyzer", "ik")
+					            .endObject()  
+				             .endObject()
+				          .endObject()
+				       .endObject();
+				
+				PutMappingRequest mappingRequest = Requests.putMappingRequest(INDICE).type(TYPE).source(mapping);
+			    transportClient.admin().indices().putMapping(mappingRequest).actionGet();
+			    
+			    logger.debug("create index and mapping are success!");
+			}else{
+				logger.debug("Index already exists!");
+			}
+			
+		} catch (Exception e) {
+			logger.error("create index and mapping are failure!", e);
+		}
+	}
+
 
 	@Override
 	public void index(Article entity) {
 		try {
 			XContentBuilder builder = XContentFactory.jsonBuilder().startObject()
-										.field("title", entity.getTitle())
-										.field("summary", entity.getSummary())
+										.field(TITLE, entity.getTitle())
+										.field(SUMMARY, entity.getSummary())
 										.endObject();
 			transportClient.prepareIndex(INDICE, TYPE,String.valueOf(entity.getId()))
 							.setSource(builder).execute().actionGet();
 			
-			logger.debug("index(Article entity) ok!data is "+builder.toString());
+			logger.debug("index entity ok!");
 		} catch (ElasticSearchException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -60,15 +117,14 @@ public class ElasticsearchArticleIndexRepository implements
 
 	@Override
 	public void index(List<Article> list) {
-		logger.debug("List<Article> list");
 		if(list.size()>0){
 			try {
 				BulkRequestBuilder bulkRequest = transportClient.prepareBulk();
 				
 				for (Article article:list) {
 					XContentBuilder builder = XContentFactory.jsonBuilder().startObject()
-							.field("title", article.getTitle())
-							.field("summary", article.getSummary())
+							.field(TITLE, article.getTitle())
+							.field(SUMMARY, article.getSummary())
 							.endObject();
 					bulkRequest.add(transportClient.prepareIndex(INDICE, TYPE,String.valueOf(article.getId())).setSource(builder));
 				}
@@ -92,8 +148,8 @@ public class ElasticsearchArticleIndexRepository implements
                 .actionGet();
 		if(getResponse.isExists()){
 			Map<String, Object> map = getResponse.getSource();
-			String title = (String) map.get("title");
-			String summary = (String) map.get("summary");
+			String title = (String) map.get(TITLE);
+			String summary = (String) map.get(SUMMARY);
 			String idStr = getResponse.getId();
 			logger.debug("get id : {}",idStr);
 			
@@ -133,7 +189,7 @@ public class ElasticsearchArticleIndexRepository implements
                 .setTypes(TYPE)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
                 .setQuery(QueryBuilders.queryString(queryString))
-                .setFrom(0).setSize(size).setExplain(true)                        //Page  
+                .setFrom(0).setSize(size).setExplain(true)
                 .execute()
                 .actionGet();
 		
@@ -145,8 +201,8 @@ public class ElasticsearchArticleIndexRepository implements
         for (SearchHit hit : hits) {
         	
             Long id = (Long) hit.getSource().get("id");
-            String  title = (String) hit.getSource().get("title");
-            String summary = (String) hit.getSource().get("summary");
+            String  title = (String) hit.getSource().get(TITLE);
+            String summary = (String) hit.getSource().get(SUMMARY);
             logger.debug("id:{},title:{},summary:{}",id,title,summary);
             
             article = new Article();
@@ -176,10 +232,9 @@ public class ElasticsearchArticleIndexRepository implements
         List<Article> list = new ArrayList<Article>();
         Article article = null;
         for (SearchHit hit : hits) {
-        	
             long id = Long.parseLong(hit.getId());
-            String  title = (String) hit.getSource().get("title");
-            String summary = (String) hit.getSource().get("summary");
+            String  title = (String) hit.getSource().get(TITLE);
+            String summary = (String) hit.getSource().get(SUMMARY);
             logger.debug("id:{},title:{},summary:{}",id,title,summary);
             
             article = new Article();
@@ -192,6 +247,7 @@ public class ElasticsearchArticleIndexRepository implements
         page.setResult(list);
 		return page;
 	}
+
 
 	
 

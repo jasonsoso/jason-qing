@@ -29,19 +29,7 @@ public class ArticleIndexRepositoryTest  extends AbstractTestBase {
     }
 
     @Test
-    public void testIndex(){
-
-        Article article = new Article();
-        article.setId(1);
-        article.setTitle("骇人听闻的给幼儿喂药事件如何发生");
-        article.setSummary("这个说法让不少网友感到疑惑，为什么幼儿缺勤，幼儿园就要给家长退费呢？从多数人自身上学的经验来看，旷课缺勤是从来没有退费这一说法的。");
-
-        articleIndexRepository.index(article);
-        Article indexedArticle = articleIndexRepository.get(1);
-        Assert.assertEquals(article.getTitle(), indexedArticle.getTitle());
-    }
-    @Test
-    public void testIndexList(){
+    public void testIndexAndSearch(){
     	List<Article> list = new ArrayList<Article>();
     	
         Article article1 = new Article();
@@ -70,32 +58,13 @@ public class ArticleIndexRepositoryTest  extends AbstractTestBase {
         
         articleIndexRepository.index(list);
         
-        Page<Article> page = new Page<Article>();
-        articleIndexRepository.queryPage(page, "*");
-        Assert.assertEquals(4L, page.getTotalCount());
+        
+        Page<Article> page1 = new Page<Article>();
+        articleIndexRepository.queryPage(page1, "冬奥会");
+        Assert.assertEquals(1L, page1.getTotalCount());
+        
+        List<Article> as = page1.getResult();
+        Article a = as.get(0);
+        Assert.assertEquals(a.getTitle(),"北京正式申办2022年冬奥会");
     }
-    /*
-    @Test
-    public void testSearch(){
-    	Page<ArticleIndex> page = articleIndexRepository.findAll(new PageRequest(0, 10));
-    	for (ArticleIndex  ai : page) {
-			logger.info("--1------------id:{},title:{}",ai.getId(),ai.getTitle());
-		}
-    	
-    	
-    	
-    	QueryBuilder queryBuilder = QueryBuilders.termQuery("title","中国人");
-    	
-    	Page<ArticleIndex> ArticleIndexs =  articleIndexRepository.search(queryBuilder,new PageRequest(0,20));
-    	for (ArticleIndex  ai : ArticleIndexs) {
-			logger.info("--2------------id:{},title:{}",ai.getId(),ai.getTitle());
-		}
-    	
-    	QueryBuilder queryBuilder2 = QueryBuilders.queryString("中国人");
-    	
-    	Page<ArticleIndex> ArticleIndexss =  articleIndexRepository.search(queryBuilder2,new PageRequest(0,20));
-    	for (ArticleIndex  ai : ArticleIndexss) {
-			logger.info("--3------------id:{},title:{}",ai.getId(),ai.getTitle());
-		}
-    }*/
 }

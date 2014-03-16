@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jason.framework.orm.Page;
+import com.jason.framework.orm.hibernate.query.HQLQuery;
 import com.jason.framework.util.html.SubStringHTML;
 import com.jason.qing.application.article.ArticleService;
 import com.jason.qing.domain.article.Article;
+import com.jason.qing.infrastruture.persist.elasticsearch.ArticleIndexRepository;
 import com.jason.qing.infrastruture.persist.hibernate.ArticleRepository;
 
 @Service
@@ -19,6 +21,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private ArticleIndexRepository articleIndexRepository;
 
 	@Override
 	public void delete(Long id) {
@@ -37,8 +42,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> query(String queryString, Object... values) {
-		return articleRepository.query(queryString, values);
+	public List<Article> query(String sql, Map<String, Object> values) {
+		return articleRepository.query(sql, values);
 	}
 
 	@Override
@@ -62,6 +67,13 @@ public class ArticleServiceImpl implements ArticleService {
 	public Article getNext(Article article) {
 		String hql = "select a from Article a where id=(select min(id) from Article where id > ? and userInfo.id=?)";
 		return (Article) articleRepository.queryUnique(hql, article.getId(),article.getUserInfo().getId());
+	}
+
+	@Override
+	public void indexAll() {
+		HQLQuery query = new HQLQuery().table("Article");
+		List<Article> list = query(query.hql(), query.values());
+		articleIndexRepository.index(list);
 	}
 
 }

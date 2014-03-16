@@ -172,6 +172,19 @@ public class ArticleController extends ControllerSupport {
 		success(redirectAttributes,"删除文章成功！");
 		return REDIRECT_LIST;
 	}
+	/**
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/indexAll", method = RequestMethod.POST)
+	public String delete(RedirectAttributes redirectAttributes) {
+		super.getLogger().debug("正在索引。。。。。。");
+		articleService.indexAll();
+		
+		super.getLogger().debug("索引结束。。。。。。");
+		success(redirectAttributes,"重新索引成功！");
+		return REDIRECT_LIST;
+	}
 	
 	
 	

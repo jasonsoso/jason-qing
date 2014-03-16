@@ -11,12 +11,24 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
+/**
+ * Elasticsearch TransportClient 管理工厂类
+ * @author Jason
+ * @date 2014年3月15日 下午9:56:29
+ */
 public class EsTransportClientManagerFactoryBean 
 	implements FactoryBean<TransportClient>, InitializingBean, DisposableBean {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	
+	/**
+	 * 客户端
+	 */
 	private TransportClient transportClient;
+	
+	/**
+	 * IP + Port
+	 */
 	private Map<String, Integer> transportAddresses;
 	
 	public void setTransportAddresses(Map<String, Integer> transportAddresses) {
@@ -28,7 +40,6 @@ public class EsTransportClientManagerFactoryBean
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		logger.info("Initializing Elasticsearch TransportClient Manager");
-		
 		initElasticsearchTransport();
 	}
 

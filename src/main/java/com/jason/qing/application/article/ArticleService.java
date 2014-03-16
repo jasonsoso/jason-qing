@@ -34,7 +34,7 @@ public interface ArticleService {
 	 * @param values
 	 * @return
 	 */
-	List<Article> query(String queryString, Object... values);
+	List<Article> query(String hql,  Map<String, Object> values);
 
 	/**
 	 * 
@@ -53,5 +53,10 @@ public interface ArticleService {
 	 * @date 2013-1-18  下午08:44:03
 	 */
 	Article getNext(Article article);
+	
+	/**
+	 * 索引全部文章
+	 */
+	void indexAll();
 	
 }
