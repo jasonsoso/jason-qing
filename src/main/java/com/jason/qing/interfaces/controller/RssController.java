@@ -33,7 +33,7 @@ public class RssController extends ControllerSupport {
 	 */
 	@RequestMapping(value = "/article", method = RequestMethod.GET)
 	public ModelAndView article() throws Exception {
-		Page<Article> page = new Page<Article>().setPageNo(1).setPageSize(20);
+		Page<Article> page = new Page<Article>().setPageNo(1).setPageSize(10);
 		
 		HQLQuery query = new HQLQuery().table("Article")
 							.orderBy("updatedAt desc");
