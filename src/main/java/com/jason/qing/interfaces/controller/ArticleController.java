@@ -177,7 +177,7 @@ public class ArticleController extends ControllerSupport {
 	 * @return
 	 */
 	@RequestMapping(value = "/indexAll", method = RequestMethod.POST)
-	public String delete(RedirectAttributes redirectAttributes) {
+	public String indexAll(RedirectAttributes redirectAttributes) {
 		super.getLogger().debug("正在索引。。。。。。");
 		articleService.indexAll();
 		

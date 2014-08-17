@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.ElasticSearchException;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -109,9 +108,7 @@ public class ElasticsearchArticleIndexRepository implements
 							.setSource(builder).execute().actionGet();
 			
 			logger.debug("index entity ok!");
-		} catch (ElasticSearchException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
